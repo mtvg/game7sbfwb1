@@ -22,17 +22,26 @@ config_schema:
   - ["i2c.enable", true]
   - ["i2c.freq", 400000]
   - ["http.document_root", "/"]
+  - ["http.force_host", "192.168.4.1"]
+  - ["wifi.ap.ssid", "Game 7 Scoreboard [??????]"]
+  - ["wifi.ap.pass", ""]
+  - ["debug.level", 3]
 
 
 # List of libraries used by this app, in order of initialisation
 libs:
+  - origin: https://github.com/mtvg/http-server
+    version: master
   - origin: https://github.com/mongoose-os-libs/ca-bundle
   - origin: https://github.com/mongoose-os-libs/rpc-service-config
   - origin: https://github.com/mongoose-os-libs/rpc-service-fs
   - origin: https://github.com/mongoose-os-libs/rpc-uart
   - origin: https://github.com/mongoose-os-libs/wifi
   - origin: https://github.com/mongoose-os-libs/i2c
-  - origin: https://github.com/mongoose-os-libs/http-server
+
+cdefs:
+  MG_ENABLE_DNS: 1
+  MG_ENABLE_DNS_SERVER: 1
 
 # Used by the mos tool to catch mos binaries incompatible with this file format
 manifest_version: 2017-05-18

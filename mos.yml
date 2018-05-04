@@ -21,8 +21,7 @@ filesystem:
 config_schema:
   - ["i2c.enable", true]
   - ["i2c.freq", 400000]
-  - ["http.document_root", "/"]
-  - ["http.force_host", "192.168.4.1"]
+  - ["http.force_host", "game7labs.lan"]
   - ["wifi.ap.ssid", "Game 7 Scoreboard [??????]"]
   - ["wifi.ap.pass", ""]
   - ["debug.level", 3]

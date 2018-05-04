@@ -1,6 +1,7 @@
 #include "mgos.h"
 #include "mgos_i2c.h"
 #include "math.h"
+#include "user_interface.h"
 
 struct mgos_i2c *i2c;
 uint16_t step = 0; 
@@ -68,6 +69,9 @@ enum mgos_app_init_result mgos_app_init(void) {
 
   struct mg_connection *c = mg_bind(mgos_get_mgr(), "udp://:53", ev_handler, 0);
   mg_set_protocol_dns(c);
+
+  uint8 on = 1;
+  wifi_softap_set_dhcps_offer_option(OFFER_ROUTER, &on);
 	
 	return MGOS_APP_INIT_SUCCESS;
 }

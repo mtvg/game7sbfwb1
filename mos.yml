@@ -21,7 +21,8 @@ filesystem:
 config_schema:
   - ["i2c.enable", true]
   - ["i2c.freq", 400000]
-  - ["http.force_host", "game7labs.lan"]
+  - ["dns.redirect", "192.168.4.1"]
+  - ["http.force_host", "setup.game7labs.com"]
   - ["wifi.ap.ssid", "Game 7 Scoreboard [??????]"]
   - ["wifi.ap.pass", ""]
   - ["debug.level", 3]
@@ -30,13 +31,13 @@ config_schema:
 # List of libraries used by this app, in order of initialisation
 libs:
   - origin: https://github.com/mtvg/http-server
-    version: master
   - origin: https://github.com/mongoose-os-libs/ca-bundle
   - origin: https://github.com/mongoose-os-libs/rpc-service-config
   - origin: https://github.com/mongoose-os-libs/rpc-service-fs
   - origin: https://github.com/mongoose-os-libs/rpc-uart
   - origin: https://github.com/mongoose-os-libs/wifi
   - origin: https://github.com/mongoose-os-libs/i2c
+  - origin: https://github.com/mtvg/dns-redirect
 
 cdefs:
   MG_ENABLE_DNS: 1

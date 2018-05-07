@@ -10,6 +10,9 @@ mongoose_os_version: ${mos.version}
 tags:
   - c
 
+includes:
+  - include
+
 # List of files / directories with C sources. No slashes at the end of dir names.
 sources:
   - src
@@ -21,27 +24,26 @@ filesystem:
 config_schema:
   - ["i2c.enable", true]
   - ["i2c.freq", 400000]
-  - ["dns.redirect", "192.168.4.1"]
-  - ["http.force_host", "setup.game7labs.com"]
   - ["wifi.ap.ssid", "Game 7 Scoreboard [??????]"]
   - ["wifi.ap.pass", ""]
+  - ["wifi.ap.ip", "192.168.7.1"]
+  - ["wifi.ap.gw", "192.168.7.1"]
+  - ["wifi.ap.dhcp_start", "192.168.7.2"]
+  - ["wifi.ap.dhcp_end", "192.168.7.100"]
+  - ["rpc.ws.enable", true]
+  - ["rpc.auth_domain", "game7labs_sb"]
+  - ["rpc.auth_file", "rpc_auth.txt"]
+  - ["rpc.acl_file", "rpc-acl.json"]
+  - ["http.document_root", nil]
   - ["debug.level", 3]
-
 
 # List of libraries used by this app, in order of initialisation
 libs:
-  - origin: https://github.com/mtvg/http-server
   - origin: https://github.com/mongoose-os-libs/ca-bundle
-  - origin: https://github.com/mongoose-os-libs/rpc-service-config
-  - origin: https://github.com/mongoose-os-libs/rpc-service-fs
   - origin: https://github.com/mongoose-os-libs/rpc-uart
   - origin: https://github.com/mongoose-os-libs/wifi
+  - origin: https://github.com/mongoose-os-libs/http-server
   - origin: https://github.com/mongoose-os-libs/i2c
-  - origin: https://github.com/mtvg/dns-redirect
-
-cdefs:
-  MG_ENABLE_DNS: 1
-  MG_ENABLE_DNS_SERVER: 1
 
 # Used by the mos tool to catch mos binaries incompatible with this file format
 manifest_version: 2017-05-18

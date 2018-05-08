@@ -22,6 +22,10 @@ filesystem:
   - fs
 
 config_schema:
+  - ["wifi.ap.enable", false]
+  - ["wifi.sta.enable", true]
+  - ["wifi.sta.ssid", "MTVG"]
+  - ["wifi.sta.pass", "soleil1245"]
   - ["i2c.enable", true]
   - ["i2c.freq", 400000]
   - ["wifi.ap.ssid", "Game 7 Scoreboard [??????]"]
@@ -30,6 +34,10 @@ config_schema:
   - ["wifi.ap.gw", "192.168.7.1"]
   - ["wifi.ap.dhcp_start", "192.168.7.2"]
   - ["wifi.ap.dhcp_end", "192.168.7.100"]
+  - ["wifi.ap.enable", false]
+  - ["wifi.sta.enable", true]
+  - ["wifi.sta.ssid", "MTVG"]
+  - ["wifi.sta.pass", "soleil1245"]
   - ["rpc.ws.enable", true]
   - ["rpc.auth_domain", "game7labs_sb"]
   - ["rpc.auth_file", "rpc_auth.txt"]

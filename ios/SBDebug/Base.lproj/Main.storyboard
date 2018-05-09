@@ -22,20 +22,44 @@
                                 <rect key="frame" x="177" y="61" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEL-kf-VOW">
-                                <rect key="frame" x="100" y="137" width="174" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="ACTION"/>
-                                <connections>
-                                    <action selector="onAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="07X-kf-np9"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnV-Qy-JdN">
-                                <rect key="frame" x="100" y="248" width="174" height="70"/>
+                                <rect key="frame" x="100" y="677" width="174" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="DISCONNECT"/>
                                 <connections>
                                     <action selector="onDisconnect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Djm-Lq-Jhe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK3-8U-DKg">
+                                <rect key="frame" x="100" y="182" width="174" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="SCORE B"/>
+                                <connections>
+                                    <action selector="onScoreB:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q8A-BI-XqJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xnt-VM-cFe">
+                                <rect key="frame" x="100" y="260" width="174" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="CLOCK"/>
+                                <connections>
+                                    <action selector="onClock:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s1g-N2-OIe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Jl-Ai-UPF">
+                                <rect key="frame" x="100" y="338" width="174" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="CLEAR"/>
+                                <connections>
+                                    <action selector="onClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vV2-e8-WMv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEL-kf-VOW">
+                                <rect key="frame" x="100" y="104" width="174" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="SCORE A"/>
+                                <connections>
+                                    <action selector="onScoreA:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OJe-aL-yaP"/>
                                 </connections>
                             </button>
                         </subviews>

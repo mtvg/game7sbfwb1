@@ -37,7 +37,7 @@ class ViewController: UIViewController, WebSocketDelegate {
     
     override func viewDidLoad() {
         
-//        NEHotspotConfigurationManager.shared.apply(NEHotspotConfiguration(ssid: Credentials.RPC_SSID))
+        NEHotspotConfigurationManager.shared.apply(NEHotspotConfiguration(ssid: Credentials.RPC_SSID))
         
         wifiIndicator.startAnimating()
         wifiIndicator.hidesWhenStopped = true
@@ -109,16 +109,22 @@ class ViewController: UIViewController, WebSocketDelegate {
         let response = MD5(String(format: "%@:%@:%@:%.0f:auth:%@", ha1, nonce.stringValue, nc.stringValue, cnonce, ha2)).lowercased()
         return ["realm":realm, "username":Credentials.RPC_USER, "nonce":nonce, "cnonce":cnonce, "response":response]
     }
- 
-
-    @IBAction func onAction(_ sender: Any) {
-        self.rpcCall(method: "SB.Next", data: ["screen":UInt8(Double(arc4random())/Double(UInt32.max)*18)]) { response in
-            print(response)
-        }
+    
+    @IBAction func onScoreA(_ sender: Any) {
+        rpcCall(method: "SB.SetText", data: ["text":"LAL213", "display":0])
+    }
+    @IBAction func onScoreB(_ sender: Any) {
+        rpcCall(method: "SB.SetText", data: ["text":"NYK126", "display":1])
+    }
+    @IBAction func onClock(_ sender: Any) {
+        rpcCall(method: "SB.SetClock", data: ["text":"00254"])
+    }
+    @IBAction func onClear(_ sender: Any) {
+        rpcCall(method: "SB.Clear")
     }
     
     @IBAction func onDisconnect(_ sender: Any) {
-        self.rpcCall(method: "Wifi.Disconnect")
+        rpcCall(method: "Wifi.Disconnect")
     }
     
     struct RPCCall {

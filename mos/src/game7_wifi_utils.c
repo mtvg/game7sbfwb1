@@ -1,8 +1,8 @@
-#include "wifi_utils.h"
+#include "game7_wifi_utils.h"
 #include "mgos.h"
 #include "mgos_rpc.h"
-#include "user_interface.h"
 #include "mgos_wifi.h"
+#include "user_interface.h"
 
 /* Additional heders from <esp8266-sdk>/user_interface.c */
 bool wifi_softap_deauth(uint8_t mac[6]);

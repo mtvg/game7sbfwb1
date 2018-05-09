@@ -1,4 +1,3 @@
-
 #ifndef G7_WIFI_UTILS_H_
 #define G7_WIFI_UTILS_H_
 

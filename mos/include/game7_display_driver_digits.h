@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 
-uint8_t I2C_ALPHA_ADDR[2] = {0x72, 0x71};
-uint8_t I2C_CLOCK_ADDR = 0x70;
+uint8_t I2C_ADDR[3] = {0x72, 0x71, 0x70};
 
 uint8_t CLOCK_DIGITS[10] = {
 //    87654321

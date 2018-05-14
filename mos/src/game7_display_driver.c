@@ -1,6 +1,7 @@
 #include "game7_display_driver.h"
 #include "game7_display_driver_digits.h"
 #include "mgos_i2c.h"
+#include "mgos.h"
 #include <math.h>
 
 struct mgos_i2c *i2c;
@@ -26,7 +27,7 @@ void game7_display_text(uint8_t display, uint8_t offset, char* text) {
 		data[2+i*2] = val >> 8;
 	}
 
-	mgos_i2c_write(i2c, I2C_ALPHA_ADDR[display], data, dlen, true);
+	mgos_i2c_write(i2c, I2C_ADDR[display], data, dlen, true);
 }
 
 void game7_display_clock(char* text) {
@@ -43,7 +44,19 @@ void game7_display_clock(char* text) {
 		data[1+i*2] = val;
 	}
 
-	mgos_i2c_write(i2c, I2C_CLOCK_ADDR, data, sizeof data, true);
+	mgos_i2c_write(i2c, I2C_ADDR[2], data, sizeof data, true);
+}
+
+void _game7_display_blink_stop(void *d) {
+	uint8_t display = (uintptr_t)d;
+	mgos_i2c_write(i2c, I2C_ADDR[display], "\x81", 1, true);
+}
+void game7_display_blink(uint8_t display) {
+	if (display > 2) return;
+
+	uintptr_t d = display;
+	mgos_i2c_write(i2c, I2C_ADDR[display], "\x83", 1, true);
+	mgos_set_timer(1800, false, _game7_display_blink_stop, (void*)d);
 }
 
 void game7_display_clear_all() {

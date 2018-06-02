@@ -6,7 +6,7 @@
 uint8_t I2C_ADDR[3] = {0x70, 0x71, 0x72};
 
 uint8_t CLOCK_DIGITS[11] = {
-//    .GFEDCBA
+//	  .GFEDCBA
 	0b01111000, // /(t)
 	0b00111111, // 0
 	0b00000110, // 1
@@ -22,8 +22,8 @@ uint8_t CLOCK_DIGITS[11] = {
 uint8_t CLOCK_DOT = 0b10000000;
 
 uint16_t ALPHA_DIGITS[10] = {
-//         1     2
-//     FJHKGABC DGLMNE
+//	       1     2
+//	   FJHKGABC DGLMNE
 	0b0100001110100001, // 0
 	0b0000000110000000, // 1
 	0b0000011100110001, // 2
@@ -37,8 +37,8 @@ uint16_t ALPHA_DIGITS[10] = {
 };
 
 uint16_t ALPHA_ALPHAS[26] = {
-//         1     2
-//     FJHKGABC DGLMNE
+//	       1     2
+//	   FJHKGABC DGLMNE
 	0b0100011110010001, // A
 	0b0001001110110100, // B
 	0b0100001000100001, // C
@@ -65,8 +65,8 @@ uint16_t ALPHA_ALPHAS[26] = {
 	0b0010100000001010, // X
 	0b0010100000000100, // Y
 	0b0000101000100010  // Z
-//     FJHKGABC DGLMNE
-//         1     2
+//	   FJHKGABC DGLMNE
+//	       1     2
 };
 
 #endif /* G7_DISPLAY_DRIVER_DIGITS_H_ */

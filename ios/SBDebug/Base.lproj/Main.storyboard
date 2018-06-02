@@ -18,61 +18,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="UJz-Uv-y8g">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="UJz-Uv-y8g">
                                 <rect key="frame" x="177" y="61" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnV-Qy-JdN">
-                                <rect key="frame" x="100" y="677" width="174" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="DISCONNECT"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ztf-Xn-Oon">
+                                <rect key="frame" x="0.0" y="321" width="375" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="z3I-70-tIN"/>
+                                </constraints>
+                            </pickerView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1av-yA-YQ0">
+                                <rect key="frame" x="0.0" y="101" width="375" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="qYd-Iz-7KA"/>
+                                </constraints>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnV-Qy-JdN">
+                                <rect key="frame" x="87.666666666666686" y="678" width="200" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="R9H-tf-qY3"/>
+                                    <constraint firstAttribute="width" constant="200" id="dwF-KE-8bv"/>
+                                </constraints>
+                                <state key="normal" title="CLEAR">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="onDisconnect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Djm-Lq-Jhe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK3-8U-DKg">
-                                <rect key="frame" x="100" y="182" width="174" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="SCORE B"/>
-                                <connections>
-                                    <action selector="onScoreB:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q8A-BI-XqJ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xnt-VM-cFe">
-                                <rect key="frame" x="100" y="260" width="174" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="CLOCK"/>
-                                <connections>
-                                    <action selector="onClock:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s1g-N2-OIe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Jl-Ai-UPF">
-                                <rect key="frame" x="100" y="338" width="174" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="CLEAR"/>
-                                <connections>
-                                    <action selector="onClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vV2-e8-WMv"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEL-kf-VOW">
-                                <rect key="frame" x="100" y="104" width="174" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="SCORE A"/>
-                                <connections>
-                                    <action selector="onScoreA:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OJe-aL-yaP"/>
+                                    <action selector="onClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3eK-al-FXU"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="1av-yA-YQ0" firstAttribute="top" secondItem="UJz-Uv-y8g" secondAttribute="bottom" constant="20" id="4Pn-O4-crp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1av-yA-YQ0" secondAttribute="trailing" id="CGM-OV-VYv"/>
+                            <constraint firstItem="ztf-Xn-Oon" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DSh-PE-1sv"/>
+                            <constraint firstItem="UJz-Uv-y8g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="17" id="Ib5-Ty-WEM"/>
+                            <constraint firstItem="1av-yA-YQ0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MYv-R4-kz0"/>
+                            <constraint firstItem="fnV-Qy-JdN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="YN2-6z-9WS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ztf-Xn-Oon" secondAttribute="trailing" id="ZZG-pN-J0o"/>
+                            <constraint firstItem="UJz-Uv-y8g" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="huc-PX-r6y"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fnV-Qy-JdN" secondAttribute="bottom" constant="20" id="lKH-xG-D8s"/>
+                            <constraint firstItem="ztf-Xn-Oon" firstAttribute="top" secondItem="1av-yA-YQ0" secondAttribute="bottom" constant="20" id="nt4-Ag-EyW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="clockPicker" destination="ztf-Xn-Oon" id="UAc-DG-wdi"/>
+                        <outlet property="teamPicker" destination="1av-yA-YQ0" id="YyK-iD-jBd"/>
                         <outlet property="wifiIndicator" destination="UJz-Uv-y8g" id="Lea-zZ-flt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="136.80000000000001" y="133.00492610837438"/>
         </scene>
     </scenes>
 </document>

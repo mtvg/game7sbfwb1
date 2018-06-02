@@ -15,32 +15,27 @@ import NetUtils
 import SwiftHash
 import Starscream
 
-class ViewController: UIViewController, WebSocketDelegate {
-    func websocketDidConnect(socket: WebSocketClient) {
-        print("websocketDidConnect")
-    }
+class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        print("websocketDidDisconnect")
-    }
-    
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        print("websocketDidReceiveData")
-    }
-    
-
+    @IBOutlet weak var teamPicker: UIPickerView!
+    @IBOutlet weak var clockPicker: UIPickerView!
     @IBOutlet weak var wifiIndicator: UIActivityIndicatorView!
     
     let socket = WebSocket(url: URL(string: String(format: "ws://%@/rpc", Credentials.RPC_HOST))!)
     var socketAuth = JSON()
     let reachability = Reachability(hostname: Credentials.RPC_HOST)!
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         
-        NEHotspotConfigurationManager.shared.apply(NEHotspotConfiguration(ssid: Credentials.RPC_SSID))
+//        NEHotspotConfigurationManager.shared.apply(NEHotspotConfiguration(ssid: Credentials.RPC_SSID))
         
         wifiIndicator.startAnimating()
         wifiIndicator.hidesWhenStopped = true
+        initPickers()
         
         socket.delegate = self
         
@@ -110,21 +105,8 @@ class ViewController: UIViewController, WebSocketDelegate {
         return ["realm":realm, "username":Credentials.RPC_USER, "nonce":nonce, "cnonce":cnonce, "response":response]
     }
     
-    @IBAction func onScoreA(_ sender: Any) {
-        rpcCall(method: "SB.SetText", data: ["text":"LAL213", "display":0])
-    }
-    @IBAction func onScoreB(_ sender: Any) {
-        rpcCall(method: "SB.SetText", data: ["text":"NYK126", "display":1])
-    }
-    @IBAction func onClock(_ sender: Any) {
-        rpcCall(method: "SB.SetClock", data: ["text":"00254"])
-    }
     @IBAction func onClear(_ sender: Any) {
         rpcCall(method: "SB.Clear")
-    }
-    
-    @IBAction func onDisconnect(_ sender: Any) {
-        rpcCall(method: "Wifi.Disconnect")
     }
     
     struct RPCCall {
@@ -134,5 +116,106 @@ class ViewController: UIViewController, WebSocketDelegate {
         let args:JSON?
     }
     
+    
+    func websocketDidConnect(socket: WebSocketClient) {
+        print("websocketDidConnect")
+        rpcCall(method: "SB.SetText", data: ["text":teamDb[0][teamPicker.selectedRow(inComponent: 0)]+teamDb[1][teamPicker.selectedRow(inComponent: 1)], "display":0])
+        rpcCall(method: "SB.SetText", data: ["text":teamDb[0][teamPicker.selectedRow(inComponent: 2)]+teamDb[1][teamPicker.selectedRow(inComponent: 3)], "display":1])
+        refreshTime()
+    }
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        print("websocketDidDisconnect")
+    }
+    
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+        print("websocketDidReceiveData")
+    }
+    
+    // -----
+    
+    var clockDb:[[(String, String)]] = [[], [], []]
+    var teamDb:[[String]] = [[], []]
+    
+    func initPickers() {
+        for i in 0...12 {
+            let s = String(format: "%02d", i)
+            clockDb[0].append((s, s))
+        }
+        for i in 0...59 {
+            let s = String(format: "%02d", i)
+            clockDb[1].append((s, s))
+        }
+        clockDb[2] = [("1st", "1"), ("2nd", "2"), ("3rd", "3"), ("4th", "4"), ("OT", "/")]
+        
+        teamDb[0] = ["ATL", "BOS", "BKN", "CHA", "CHI", "CLE", "DAL", "DEN", "DET", "GSW", "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN", "NOP", "NYK", "OKC", "ORL", "PHI", "PHX", "POR", "SAC", "SAS", "TOR", "UTA", "WAS"]
+        for i in 0...200 {
+            let s = String(format: "%01d", i).leftPadding(toLength: 3, withPad: " ")
+            teamDb[1].append(s)
+        }
+        
+        teamPicker.delegate = self
+        teamPicker.dataSource = self
+        clockPicker.delegate = self
+        clockPicker.dataSource = self
+        
+        clockPicker.selectRow(clockDb[0].count-1, inComponent: 0, animated: false)
+        teamPicker.selectRow(1, inComponent: 2, animated: false)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return pickerView == clockPicker ? clockDb.count : teamDb.count*2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerView == clockPicker ? clockDb[component].count : teamDb[component%2].count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == clockPicker {
+            refreshTime()
+        } else {
+            let display = floor(Double(component)/2)
+            let offset = (component%2)*3
+            rpcCall(method: "SB.SetText", data: ["text":teamDb[component%2][row], "display":display, "offset":offset])
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let l:UILabel
+        if let view = view as? UILabel {
+            l = view
+        } else {
+            l = UILabel()
+            l.font = UIFont(name: "Verdana", size: 12)
+            l.textAlignment = .center
+            l.textColor = UIColor.white
+        }
+        if pickerView == clockPicker {
+            l.text = clockDb[component][row].0
+        } else {
+            l.text = teamDb[component%2][row]
+        }
+        
+        return l
+    }
+    
+    func refreshTime() {
+        let s =
+            clockDb[0][clockPicker.selectedRow(inComponent: 0)].1 +
+            clockDb[1][clockPicker.selectedRow(inComponent: 1)].1 +
+            clockDb[2][clockPicker.selectedRow(inComponent: 2)].1
+        rpcCall(method: "SB.SetClock", data: ["text":s])
+    }
 }
 
+extension String {
+    func leftPadding(toLength: Int, withPad character: Character) -> String {
+        let newLength = self.count
+        if newLength < toLength {
+            return String(repeatElement(character, count: toLength - newLength)) + self
+        } else {
+            return self
+        }
+    }
+}

@@ -19,9 +19,9 @@ void game7_display_text(uint8_t display, uint8_t offset, char* text) {
 	for (uint8_t i=0; i<tlen&&i<6-offset; i++) {
 		uint16_t val = 0;
 		if (text[i] >= 48 && text[i] <= 57) {
-			val = I2C_ALPHA_DIGITS[display][text[i]-48];
+			val = ALPHA_DIGITS[text[i]-48];
 		} else if (text[i] >= 65 && text[i] <= 90) {
-			val = I2C_ALPHA_ALPHAS[display][text[i]-65];
+			val = ALPHA_ALPHAS[text[i]-65];
 		}
 		data[1+i*2] = val & 0xFF;
 		data[2+i*2] = val >> 8;
@@ -35,8 +35,8 @@ void game7_display_clock(char* text) {
 	uint8_t data[11] = {0};
 	for (uint8_t i=0; i<5&&i<tlen; i++) {
 		uint8_t val = 0;
-		if (text[i] >= 48 && text[i] <= 57) {
-			val = CLOCK_DIGITS[text[i]-48];
+		if (text[i] >= 47 && text[i] <= 57) {
+			val = CLOCK_DIGITS[text[i]-47];
 		}
 		if (i == 1) {
 			val |= CLOCK_DOT;
@@ -75,4 +75,5 @@ void game7_display_init() {
 		mgos_i2c_write(i2c, 0x70+i, data, sizeof data, true);
 		mgos_i2c_write(i2c, 0x70+i, "\x81", 1, true);
 	}
+
 }

@@ -90,6 +90,13 @@ static void rpc_clear_cb(struct mg_rpc_request_info *ri, void *cb_arg,
 	(void) cb_arg;
 }
 
+static void reset_button_cb(int pin, void *arg) {
+	game7_display_clear_all();
+
+	(void) pin;
+	(void) arg;
+}
+
 enum mgos_app_init_result mgos_app_init(void) {
 	
 	wifi_utils_register_disconnect_rpc();
@@ -99,6 +106,9 @@ enum mgos_app_init_result mgos_app_init(void) {
 	mg_rpc_add_handler(mgos_rpc_get_global(), "SB.SetText", "{text: %Q, display: %i, offset: %i, blink: %B}", rpc_set_text_cb, NULL);
 	mg_rpc_add_handler(mgos_rpc_get_global(), "SB.SetClock", "{text: %Q, blink: %B}", rpc_set_clock_cb, NULL);
 	mg_rpc_add_handler(mgos_rpc_get_global(), "SB.Clear", NULL, rpc_clear_cb, NULL);
+
+	// Not working on Pin 16 (D0) because of hardware wiring
+	mgos_gpio_set_button_handler(16, MGOS_GPIO_PULL_UP, MGOS_GPIO_INT_EDGE_NEG, 50, reset_button_cb, NULL);
 
 	play_tone(TONE_POWER);
 	

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="UJz-Uv-y8g">
-                                <rect key="frame" x="177" y="61" width="20" height="20"/>
+                                <rect key="frame" x="177.66666666666666" y="61" width="20" height="20"/>
                             </activityIndicatorView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ztf-Xn-Oon">
                                 <rect key="frame" x="0.0" y="321" width="375" height="200"/>
@@ -37,7 +38,7 @@
                                 <rect key="frame" x="87.666666666666686" y="678" width="200" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="R9H-tf-qY3"/>
-                                    <constraint firstAttribute="width" constant="200" id="dwF-KE-8bv"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="dwF-KE-8bv"/>
                                 </constraints>
                                 <state key="normal" title="CLEAR">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -46,24 +47,63 @@
                                     <action selector="onClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3eK-al-FXU"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="CfF-Au-WTH">
+                                <rect key="frame" x="17.333333333333343" y="541" width="341.33333333333326" height="31"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="onSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="KhS-I2-RzW"/>
+                                    <action selector="onSliderDone:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2b5-Au-sPy"/>
+                                    <action selector="onSliderDone:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="h28-tu-oDn"/>
+                                </connections>
+                            </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkU-hU-0Q8">
+                                <rect key="frame" x="19" y="579" width="159.33333333333334" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="&lt;">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPrev:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2id-yo-KKf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZ9-ZF-SHd">
+                                <rect key="frame" x="178.33333333333337" y="579" width="177.66666666666663" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="&gt;">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nQA-dP-ZNf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="1av-yA-YQ0" firstAttribute="top" secondItem="UJz-Uv-y8g" secondAttribute="bottom" constant="20" id="4Pn-O4-crp"/>
+                            <constraint firstItem="dkU-hU-0Q8" firstAttribute="leading" secondItem="CfF-Au-WTH" secondAttribute="leading" id="8Yx-cD-TwF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1av-yA-YQ0" secondAttribute="trailing" id="CGM-OV-VYv"/>
+                            <constraint firstItem="CfF-Au-WTH" firstAttribute="top" secondItem="ztf-Xn-Oon" secondAttribute="bottom" constant="20" id="DLS-N0-XDf"/>
                             <constraint firstItem="ztf-Xn-Oon" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DSh-PE-1sv"/>
                             <constraint firstItem="UJz-Uv-y8g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="17" id="Ib5-Ty-WEM"/>
+                            <constraint firstItem="xZ9-ZF-SHd" firstAttribute="trailing" secondItem="CfF-Au-WTH" secondAttribute="trailing" id="JNA-2f-T4c"/>
+                            <constraint firstItem="CfF-Au-WTH" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.9" id="MOJ-Mc-S0U"/>
                             <constraint firstItem="1av-yA-YQ0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MYv-R4-kz0"/>
+                            <constraint firstItem="dkU-hU-0Q8" firstAttribute="top" secondItem="CfF-Au-WTH" secondAttribute="bottom" constant="8" id="QYG-N6-87M"/>
+                            <constraint firstItem="xZ9-ZF-SHd" firstAttribute="leading" secondItem="dkU-hU-0Q8" secondAttribute="trailing" id="SR0-II-M0w"/>
                             <constraint firstItem="fnV-Qy-JdN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="YN2-6z-9WS"/>
+                            <constraint firstItem="CfF-Au-WTH" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ZPu-kG-ZHg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ztf-Xn-Oon" secondAttribute="trailing" id="ZZG-pN-J0o"/>
                             <constraint firstItem="UJz-Uv-y8g" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="huc-PX-r6y"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fnV-Qy-JdN" secondAttribute="bottom" constant="20" id="lKH-xG-D8s"/>
+                            <constraint firstItem="xZ9-ZF-SHd" firstAttribute="top" secondItem="CfF-Au-WTH" secondAttribute="bottom" constant="8" id="n64-Li-GeC"/>
                             <constraint firstItem="ztf-Xn-Oon" firstAttribute="top" secondItem="1av-yA-YQ0" secondAttribute="bottom" constant="20" id="nt4-Ag-EyW"/>
+                            <constraint firstItem="dkU-hU-0Q8" firstAttribute="trailing" secondItem="CfF-Au-WTH" secondAttribute="trailing" multiplier="0.5" id="qzB-mv-Ig8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="clockPicker" destination="ztf-Xn-Oon" id="UAc-DG-wdi"/>
+                        <outlet property="slider" destination="CfF-Au-WTH" id="UZp-s1-ZqS"/>
                         <outlet property="teamPicker" destination="1av-yA-YQ0" id="YyK-iD-jBd"/>
                         <outlet property="wifiIndicator" destination="UJz-Uv-y8g" id="Lea-zZ-flt"/>
                     </connections>

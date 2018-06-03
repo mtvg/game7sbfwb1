@@ -38,7 +38,7 @@ void game7_display_clock(char* text) {
 		if (text[i] >= 47 && text[i] <= 57) {
 			val = CLOCK_DIGITS[text[i]-47];
 		}
-		if (i == 1) {
+		if (i == 1 && text[5] != '.' || i == 2 && text[5] == '.') {
 			val |= CLOCK_DOT;
 		}
 		data[1+i*2] = val;

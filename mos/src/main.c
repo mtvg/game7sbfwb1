@@ -78,6 +78,31 @@ static void rpc_set_clock_cb(struct mg_rpc_request_info *ri, void *cb_arg,
 	(void) cb_arg;
 }
 
+static void rpc_set_score_clock_cb(struct mg_rpc_request_info *ri, void *cb_arg,
+                   struct mg_rpc_frame_info *fi, struct mg_str args) {
+
+	char *clock;
+	char *scoreA;
+	char *scoreB;
+	int blinkA = 0;
+	int blinkB = 0;
+	json_scanf(args.p, args.len, ri->args_fmt, &clock, &scoreA, &scoreB, &blinkA, &blinkB);
+
+	game7_display_text(0, 3, scoreA);
+	game7_display_text(1, 3, scoreB);
+	game7_display_clock(clock);
+	if (blinkA == 1)
+		game7_display_blink(0);
+	if (blinkB == 1)
+		game7_display_blink(1);
+
+	mg_rpc_send_responsef(ri, NULL);
+
+	(void) fi;
+	(void) args;
+	(void) cb_arg;
+}
+
 static void rpc_clear_cb(struct mg_rpc_request_info *ri, void *cb_arg,
                    struct mg_rpc_frame_info *fi, struct mg_str args) {
 	
@@ -105,6 +130,7 @@ enum mgos_app_init_result mgos_app_init(void) {
 	
 	mg_rpc_add_handler(mgos_rpc_get_global(), "SB.SetText", "{text: %Q, display: %i, offset: %i, blink: %B}", rpc_set_text_cb, NULL);
 	mg_rpc_add_handler(mgos_rpc_get_global(), "SB.SetClock", "{text: %Q, blink: %B}", rpc_set_clock_cb, NULL);
+	mg_rpc_add_handler(mgos_rpc_get_global(), "SB.SetScoreClock", "{clock: %Q, scoreA: %Q, scoreB: %Q, blinkA: %B, blinkB: %B}", rpc_set_score_clock_cb, NULL);
 	mg_rpc_add_handler(mgos_rpc_get_global(), "SB.Clear", NULL, rpc_clear_cb, NULL);
 
 	// Not working on Pin 16 (D0) because of hardware wiring

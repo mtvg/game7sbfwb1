@@ -13,5 +13,6 @@ target 'SBDebug' do
   pod 'ReachabilitySwift'
   pod 'NetUtils'
   pod 'SwiftHash'
+  pod 'SwiftHTTP'
 
 end

@@ -14,6 +14,7 @@ import SwiftyJSON
 import NetUtils
 import SwiftHash
 import Starscream
+import SwiftHTTP
 
 class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -55,6 +56,15 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
         }
         
         try? reachability.startNotifier()
+        
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+            self.makeRequest()
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     var callCount:UInt = 0
@@ -74,6 +84,50 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
         }
         
         try? socket.write(data: json.rawData())
+    }
+    
+    var mid:Int = 0
+    
+    func makeRequest() {
+        HTTP.GET("http://data.nba.com/data/v2015/json/mobile_teams/nba/2017/scores/00_todays_scores.json") { response in
+            if let err = response.error {
+                print("error: \(err.localizedDescription)")
+                return //also notify app of failure as needed
+            }
+            
+            if let json = try? JSON.init(data: response.data),
+                let mid = json["gs"]["mid"].int,
+                mid != self.mid,
+                let game = json["gs"]["g"][0].dictionary,
+                let p = game["p"]?.int, let cl = game["cl"]?.string,
+                let v = game["v"]?["s"].int, let h = game["h"]?["s"].int,
+                let va = game["v"]?["ta"].string, let ha = game["h"]?["ta"].string {
+                
+                self.mid = mid
+                let cla = cl.components(separatedBy: ":")
+                
+                
+                
+                DispatchQueue.main.sync {
+                    if self.teamDb[0][self.teamPicker.selectedRow(inComponent: 0)] != va, let i = self.teamDb[0].index(of: va) {
+                        self.teamPicker.selectRow(i, inComponent: 0, animated: true)
+                        self.rpcCall(method: "SB.SetText", data: ["text":va, "display":0])
+                    }
+                    if self.teamDb[0][self.teamPicker.selectedRow(inComponent: 2)] != ha, let i = self.teamDb[0].index(of: ha) {
+                        self.teamPicker.selectRow(i, inComponent: 2, animated: true)
+                        self.rpcCall(method: "SB.SetText", data: ["text":ha, "display":1])
+                    }
+                    
+                    self.clockPicker.selectRow(p-1, inComponent: 2, animated: true)
+                    self.clockPicker.selectRow(Int(cla[0])!, inComponent: 0, animated: true)
+                    self.clockPicker.selectRow(Int(Float(cla[1])!), inComponent: 1, animated: true)
+                    self.teamPicker.selectRow(v, inComponent: 1, animated: true)
+                    self.teamPicker.selectRow(h, inComponent: 3, animated: true)
+                    
+                    self.refreshScoreTime()
+                }
+            }
+        }
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -119,9 +173,9 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocketDidConnect")
-        rpcCall(method: "SB.SetText", data: ["text":teamDb[0][teamPicker.selectedRow(inComponent: 0)]+teamDb[1][teamPicker.selectedRow(inComponent: 1)], "display":0])
-        rpcCall(method: "SB.SetText", data: ["text":teamDb[0][teamPicker.selectedRow(inComponent: 2)]+teamDb[1][teamPicker.selectedRow(inComponent: 3)], "display":1])
-        refreshTime()
+//        rpcCall(method: "SB.SetText", data: ["text":teamDb[0][teamPicker.selectedRow(inComponent: 0)]+teamDb[1][teamPicker.selectedRow(inComponent: 1)], "display":0])
+//        rpcCall(method: "SB.SetText", data: ["text":teamDb[0][teamPicker.selectedRow(inComponent: 2)]+teamDb[1][teamPicker.selectedRow(inComponent: 3)], "display":1])
+//        refreshTime()
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
@@ -162,6 +216,7 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
         clockPicker.dataSource = self
         
         clockPicker.selectRow(clockDb[0].count-1, inComponent: 0, animated: false)
+        
         teamPicker.selectRow(1, inComponent: 2, animated: false)
         
     }
@@ -234,19 +289,19 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
     }
     
     func refreshScoreTime() {
-        let event = game[Int(round(slider.value*Float(game.count-1)))]
+        /*let event = game[Int(round(slider.value*Float(game.count-1)))]
         let s:String
-        if event[2] == round(event[2]) {
-            s =
-                clockDb[0][Int(event[1])].1 +
-                clockDb[1][Int(event[2])].1 +
-                clockDb[2][Int(event[0])].1 + ":"
-        } else {
+        if event[2] == round(event[2]) {*/
+            let s =
+                clockDb[0][clockPicker.selectedRow(inComponent: 0)].1 +
+                clockDb[1][clockPicker.selectedRow(inComponent: 1)].1 +
+                clockDb[2][clockPicker.selectedRow(inComponent: 2)].1
+        /*} else {
             s =
                 String(format: "%02d", Int(event[2]*10)).leftPadding(toLength: 4, withPad: " ") +
                 clockDb[2][Int(event[0])].1 + "."
-        }
-        rpcCall(method: "SB.SetScoreClock", data: ["clock":s, "scoreA":teamDb[1][Int(event[3])], "scoreB":teamDb[1][Int(event[4])]])
+        }*/
+        rpcCall(method: "SB.SetScoreClock", data: ["clock":s, "scoreA":teamDb[1][teamPicker.selectedRow(inComponent: 1)], "scoreB":teamDb[1][teamPicker.selectedRow(inComponent: 3)]])
     }
     
     func refreshTime() {

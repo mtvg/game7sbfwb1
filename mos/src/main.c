@@ -28,6 +28,7 @@ static void tone_timer(void *arg) {
 		pos = 0;
 		mgos_clear_timer(timerid);
 		timerid = 0;
+		mgos_pwm_set(5, 0, 0);
 		mgos_gpio_set_mode(5, MGOS_GPIO_MODE_INPUT);
 	}
 
@@ -97,6 +98,8 @@ static void rpc_set_score_clock_cb(struct mg_rpc_request_info *ri, void *cb_arg,
 		game7_display_blink(1);
 
 	mg_rpc_send_responsef(ri, NULL);
+
+	// play_tone(TONE_SIGNAL);
 
 	(void) fi;
 	(void) args;

@@ -76,14 +76,23 @@
                                     <action selector="onNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nQA-dP-ZNf"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-MR-c3g">
+                                <rect key="frame" x="163" y="647" width="51" height="31"/>
+                                <color key="onTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="onSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="jkZ-Fo-QUw"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="1av-yA-YQ0" firstAttribute="top" secondItem="UJz-Uv-y8g" secondAttribute="bottom" constant="20" id="4Pn-O4-crp"/>
                             <constraint firstItem="dkU-hU-0Q8" firstAttribute="leading" secondItem="CfF-Au-WTH" secondAttribute="leading" id="8Yx-cD-TwF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1av-yA-YQ0" secondAttribute="trailing" id="CGM-OV-VYv"/>
+                            <constraint firstItem="2O2-MR-c3g" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Cic-RX-l1K"/>
                             <constraint firstItem="CfF-Au-WTH" firstAttribute="top" secondItem="ztf-Xn-Oon" secondAttribute="bottom" constant="20" id="DLS-N0-XDf"/>
                             <constraint firstItem="ztf-Xn-Oon" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DSh-PE-1sv"/>
+                            <constraint firstItem="fnV-Qy-JdN" firstAttribute="top" secondItem="2O2-MR-c3g" secondAttribute="bottom" id="Gyn-xa-dv1"/>
                             <constraint firstItem="UJz-Uv-y8g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="17" id="Ib5-Ty-WEM"/>
                             <constraint firstItem="xZ9-ZF-SHd" firstAttribute="trailing" secondItem="CfF-Au-WTH" secondAttribute="trailing" id="JNA-2f-T4c"/>
                             <constraint firstItem="CfF-Au-WTH" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.9" id="MOJ-Mc-S0U"/>

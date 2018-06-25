@@ -15,7 +15,7 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - NetUtils
     - ReachabilitySwift
     - Starscream
@@ -33,4 +33,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6733aa7d87df79ae24441c95a29f7c417a8cc3e4
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3

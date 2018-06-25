@@ -57,10 +57,6 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
         
         try? reachability.startNotifier()
         
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
-            self.makeRequest()
-        }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -89,6 +85,60 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
     var mid:Int = 0
     
     func makeRequest() {
+        
+        HTTP.GET(String(format: "https://api.thescore.com/multisport/events?game_date.in=%@,%@", Date().startOfDay.toRFC3339(), Date().endOfDay.toRFC3339())) { response in
+            if let err = response.error {
+                print("error: \(err.localizedDescription)")
+                return //also notify app of failure as needed
+            }
+            
+            if let json = try? JSON.init(data: response.data) ,
+                let wnba = json["wnba","events"].array {
+                
+                for event in wnba {
+                    if event["event_status"].string == "in_progress",
+                    let va = event["away_team","abbreviation"].string?.uppercased(), let ha = event["home_team","abbreviation"].string?.uppercased(),
+                    let cl = event["box_score","progress","clock"].string,
+                    let p = event["box_score","progress","segment"].int,
+                    let v = event["box_score","score","away","score"].int, let h = event["box_score","score","home","score"].int {
+                        let cla = cl.components(separatedBy: ":")
+                        DispatchQueue.main.sync {
+                            if self.teamDb[0][self.teamPicker.selectedRow(inComponent: 0)] != va {
+                                if let i = self.teamDb[0].index(of: va) {
+                                    self.teamPicker.selectRow(i, inComponent: 0, animated: true)
+                                } else {
+                                    self.teamDb[0].append(va)
+                                    self.teamPicker.reloadComponent(0)
+                                    self.teamPicker.selectRow(self.teamDb[0].count-1, inComponent: 0, animated: true)
+                                }
+                                self.rpcCall(method: "SB.SetText", data: ["text":va, "display":0])
+                            }
+                            if self.teamDb[0][self.teamPicker.selectedRow(inComponent: 2)] != ha {
+                                if let i = self.teamDb[0].index(of: ha) {
+                                    self.teamPicker.selectRow(i, inComponent: 2, animated: true)
+                                } else {
+                                    self.teamDb[0].append(ha)
+                                    self.teamPicker.reloadComponent(2)
+                                    self.teamPicker.selectRow(self.teamDb[0].count-1, inComponent: 2, animated: true)
+                                }
+                                self.rpcCall(method: "SB.SetText", data: ["text":ha, "display":1])
+                            }
+                            
+                            self.clockPicker.selectRow(p-1, inComponent: 2, animated: true)
+                            self.clockPicker.selectRow(Int(cla[0])!, inComponent: 0, animated: true)
+                            self.clockPicker.selectRow(Int(Float(cla[1])!), inComponent: 1, animated: true)
+                            self.teamPicker.selectRow(v, inComponent: 1, animated: true)
+                            self.teamPicker.selectRow(h, inComponent: 3, animated: true)
+                            
+                            self.refreshScoreTime()
+                        }
+                        break
+                    }
+                }
+            }
+        }
+        
+        /*
         HTTP.GET("http://data.nba.com/data/v2015/json/mobile_teams/nba/2017/scores/00_todays_scores.json") { response in
             if let err = response.error {
                 print("error: \(err.localizedDescription)")
@@ -128,6 +178,7 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
                 }
             }
         }
+         */
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -288,6 +339,19 @@ class ViewController: UIViewController, WebSocketDelegate, UIPickerViewDelegate,
         refreshScoreTime()
     }
     
+    var timer:Timer?
+    
+    @IBAction func onSwitch(_ sender: UISwitch) {
+        
+        if sender.isOn {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+                self.makeRequest()
+            }
+        } else {
+            timer?.invalidate()
+        }
+    }
+    
     func refreshScoreTime() {
         /*let event = game[Int(round(slider.value*Float(game.count-1)))]
         let s:String
@@ -321,5 +385,25 @@ extension String {
         } else {
             return self
         }
+    }
+}
+
+extension Date {
+    var startOfDay: Date {
+        return Calendar.current.startOfDay(for: self)
+    }
+    
+    var endOfDay: Date! {
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        return Calendar.current.date(byAdding: components, to: startOfDay)
+    }
+    
+    func toRFC3339() -> String {
+        let RFC3339DateFormatter = DateFormatter()
+        RFC3339DateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        RFC3339DateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return RFC3339DateFormatter.string(from: self)
     }
 }

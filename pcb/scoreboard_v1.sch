@@ -5944,7 +5944,7 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <wire x1="281.94" y1="-43.18" x2="271.78" y2="-43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="3.3V" class="0">
+<net name="3.3V" class="1">
 <segment>
 <pinref part="U$6" gate="G$1" pin="3.3V"/>
 <wire x1="429.26" y1="60.96" x2="429.26" y2="66.04" width="0.1524" layer="91"/>
